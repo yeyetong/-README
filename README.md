@@ -21,13 +21,13 @@
 
 数据设计
 ---------
- typedef struct goods {   char name[100]; //记录货物名  
+typedef struct goods {   char name[100]; //记录货物名  
                            int count;  //记录货物数量
                         }Goods; 
+
 函数设计
 --------
  进货：
- -----
  //进货，对应进货模块，表示当前进货一批数量为 count 的 name 商品 
  bool add_goods(char name[], int count);//进货函数声名
  bool add_goods(char name[], int count){  int index=1; 
