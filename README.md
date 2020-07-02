@@ -33,16 +33,21 @@ typedef struct goods {   char name[100]; //记录货物名
  bool add_goods(char name[], int count){  int index=1; 
  if(increase_count(name, count)==0)//判断仓库中是否存在该货物，若存在，则增加 货物数量  
   add_to_list(name,count);//若不存在，则增加库存的货物种类  
-  return index; }
+  return index; 
+  }
   1、//更新库存信息，对应增加库存子功能，对 name 商品新增 count 数量 
   bool increase_count (char name[]，int count);//声名函数名称 
   bool increase_count(char name[], int count){  
   int goods_count=0;//定义货物数量  
   FILE * pgoods=fopen("goods.dat","r");//打开库存文件  
-  FILE * pgoods1=fopen("temp.dat", "w"); //创建临时文件 
-  if(pgoods==NULL||pgoods1==NULL)  printf("系统打开失败");//确保文件顺利打开  
-  char * p1=name;  int index=0;  rewind(pgoods);//确保文件指针指向文件开头  
-  rewind(pgoods1);  fread(&goods_count, sizeof(int), 1, pgoods);//读出文件中记录的货物种类数量  
+  FILE * pgoods1=fopen("temp.dat", "w");//创建临时文件 
+  if(pgoods==NULL||pgoods1==NULL)  
+  printf("系统打开失败");//确保文件顺利打开  
+  char * p1=name;  
+  int index=0;  
+  rewind(pgoods);//确保文件指针指向文件开头  
+  rewind(pgoods1); 
+  fread(&goods_count, sizeof(int), 1, pgoods);//读出文件中记录的货物种类数量  
   fwrite(&goods_count,sizeof(int), 1, pgoods1);//将货物种类数量写入临时文件中 
   Goods * p=(Goods *)malloc(sizeof(Goods)); 
   int i=0;  
@@ -55,7 +60,8 @@ typedef struct goods {   char name[100]; //记录货物名
    fwrite(p, sizeof(Goods), 1, pgoods1);   
    i++;
    }//将原库存文件中的数据复制到临时文件中，并更新进货的货物数量  
-   fclose(pgoods);  fclose(pgoods1);//关闭两个文件  
+   fclose(pgoods);  
+   fclose(pgoods1);//关闭两个文件  
    remove("goods.dat");  
    rename("temp.dat","goods.dat");//删除原库存文件，并将临时文件改名使其成为库存文 件，从而达到更新库存的目的  
    return index; 
